@@ -1,6 +1,6 @@
 "use client";
 
-import axios from "axios";
+import axios, { Axios } from "axios";
 import VisitorCount from "./component/VisitorCount";
 
 import Image from "next/image";
@@ -77,15 +77,16 @@ export default function Home() {
 
   //counting visitors
 
-  useEffect(() => {
-    const trackVisitor = async () => {
-      try {
-        await axios.post("/api/trackVisitor");
-      } catch (error) {
-        console.error("Error tracking visitor:", error);
-      }
-    };
+  const trackVisitor = async () => {
+    try {
+      const response = await axios.post("/api/trackVisitor");
+      console.log("Visitor tracked:", response.data);
+    } catch (error) {
+      console.error("Error tracking visitor:", error);
+    }
+  };
 
+  useEffect(() => {
     trackVisitor();
   }, []);
 
